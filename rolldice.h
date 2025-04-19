@@ -8,6 +8,9 @@
  * Stevie Strickland - sstrickl@ccs.neu.edu
  */
 
+#ifndef ROLLDICE_H
+#define ROLLDICE_H
+
 /* Standard includes */
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,3 +69,5 @@ typedef enum {UNDEF, URANDOM, RANDOM} rand_type;
 extern int parse_string(char *dice_string, int *dice_nums);
 extern int rolldie(int num_sides);
 extern void init_random(rand_type rand_file);
+
+#endif /* ROLLDICE_H */
