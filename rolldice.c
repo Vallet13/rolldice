@@ -77,7 +77,8 @@ int parse_string(char *dice_string, int *dice_nums) {
         dice_nums[NUM_SIDES] = 6;
         dice_nums[MULTIPLIER] = 1;
         dice_nums[MODIFIER] = 0;
-        dice_nums[NUM_DROP] = 0;
+        dice_nums[NUM_DROP_LOWEST] = 0;
+        dice_nums[NUM_DROP_HIGHEST] = 0;
         dice_nums[NUM_INITIALIZED] = 1;
     }
     
@@ -104,7 +105,16 @@ int parse_string(char *dice_string, int *dice_nums) {
                     if (!res_int) {
                         return 1;
                     } else {
-                        dice_nums[NUM_DROP] = res_int;
+                        dice_nums[NUM_DROP_LOWEST] = res_int;
+                    }
+                    break;
+                case 'h':
+                    dice_string++;
+                    res_int = get_num_drop(dice_string, temp_int);
+                    if (!res_int) {
+                        return 1;
+                    } else {
+                        dice_nums[NUM_DROP_HIGHEST] = res_int;
                     }
                     break;
                 case 'x':

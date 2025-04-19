@@ -43,9 +43,10 @@
 #define NUM_SIDES 2
 #define MULTIPLIER 3
 #define MODIFIER 4
-#define NUM_DROP 5
-#define NUM_INITIALIZED 6
-#define DICE_ARRAY_SIZE 7
+#define NUM_DROP_LOWEST 5
+#define NUM_DROP_HIGHEST 6
+#define NUM_INITIALIZED 7
+#define DICE_ARRAY_SIZE 8
 
 /* The following #defines give the tokens for each part of the format
  * string.  Perhaps eventually I'll change parse_string to use strtok()
@@ -56,7 +57,8 @@
 #define MULTI_IDENT "*"
 #define MOD_PLUS_IDENT "+"
 #define MOD_MINUS_IDENT "-"
-#define DROP_IDENT "s"
+#define DROP_LOWEST_IDENT "s"
+#define DROP_HIGHEST_IDENT "h"
 
 // Defines values for true and false, just for testing stuff boolean-wise :)
 #define TRUE_VAL 1

@@ -69,7 +69,8 @@ static void print_version() {
 void print_rolls(int *dice_nums) {
     int i, j, k, temp_int, temp_index, temp_total;
     int* temp_roll;
-     
+    int remaining_dice;
+
     if((temp_roll = malloc(sizeof(*temp_roll) * dice_nums[NUM_DICE])) == NULL) {
         perror("rolldice");
         exit(EX_OSERR);
@@ -77,22 +78,41 @@ void print_rolls(int *dice_nums) {
     
     for(i = 0; i < dice_nums[NUM_ROLLS]; i++) {
         temp_total = 0;
+        remaining_dice = dice_nums[NUM_DICE];
+        
         if(print_separate) printf("Roll #%d: (", i+1);
         for(j = 0; j < dice_nums[NUM_DICE]; j++) {
             temp_roll[j] = rolldie(dice_nums[NUM_SIDES]);
             if(print_separate) printf("%d%s", temp_roll[j], (j < dice_nums[NUM_DICE] - 1) ? " " : "");
             temp_total += temp_roll[j];
         }
-        for(j = 0; j < dice_nums[NUM_DROP]; j++) {
+        for(j = 0; j < dice_nums[NUM_DROP_LOWEST]; j++) {
             temp_int = SHRT_MAX;
-            for(k = 0; k < dice_nums[NUM_DICE]; k++)
+            for(k = 0; k < remaining_dice; k++)
                 if(temp_int > temp_roll[k]) {
                     temp_int = temp_roll[k];
                     temp_index = k;
                 }
             if(print_separate) printf("- %d ", temp_int);
             temp_total -= temp_int;
-            temp_roll[temp_index] = SHRT_MAX;
+            remaining_dice--;
+            for(k = temp_index; k < remaining_dice; k++) {
+                temp_roll[k] = temp_roll[k + 1];
+            }
+        }
+        for(j = 0; j < dice_nums[NUM_DROP_HIGHEST]; j++) {
+            temp_int = 0;
+            for(k = 0; k < remaining_dice; k++)
+                if(temp_int < temp_roll[k]) {
+                    temp_int = temp_roll[k];
+                    temp_index = k;
+                }
+            if(print_separate) printf("- %d ", temp_int);
+            temp_total -= temp_int;
+            remaining_dice--;
+            for(k = temp_index; k < remaining_dice; k++) {
+                temp_roll[k] = temp_roll[k + 1];
+            }
         }
         if(print_separate) printf(") ");
         if(dice_nums[MULTIPLIER] != 1) {
