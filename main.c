@@ -80,12 +80,21 @@ void print_rolls(int *dice_nums) {
         temp_total = 0;
         remaining_dice = dice_nums[NUM_DICE];
         
-        if(print_separate) printf("Roll #%d: (", i+1);
+        if(print_separate) printf("Roll #%d:\n  Dice: (", i+1);
         for(j = 0; j < dice_nums[NUM_DICE]; j++) {
             temp_roll[j] = rolldie(dice_nums[NUM_SIDES]);
-            if(print_separate) printf("%d%s", temp_roll[j], (j < dice_nums[NUM_DICE] - 1) ? " " : "");
             temp_total += temp_roll[j];
+            if(print_separate){
+                printf("%d", temp_roll[j]);
+                if (j < dice_nums[NUM_DICE] - 1) {
+                    printf(" ");
+                } else {
+                    printf(") = %d\n", temp_total);
+                }
+            }
         }
+
+        if(print_separate && dice_nums[NUM_DROP_LOWEST] > 0) printf("  Drop lowest %d: (", dice_nums[NUM_DROP_LOWEST]);
         for(j = 0; j < dice_nums[NUM_DROP_LOWEST]; j++) {
             temp_int = SHRT_MAX;
             for(k = 0; k < remaining_dice; k++)
@@ -93,13 +102,22 @@ void print_rolls(int *dice_nums) {
                     temp_int = temp_roll[k];
                     temp_index = k;
                 }
-            if(print_separate) printf("- %d ", temp_int);
             temp_total -= temp_int;
+            if(print_separate){
+                printf("-%d", temp_int);
+                if (j < dice_nums[NUM_DROP_LOWEST] - 1) {
+                    printf(" ");
+                } else {
+                    printf(") = %d\n", temp_total);
+                }
+            }
             remaining_dice--;
             for(k = temp_index; k < remaining_dice; k++) {
                 temp_roll[k] = temp_roll[k + 1];
             }
         }
+
+        if(print_separate && dice_nums[NUM_DROP_HIGHEST] > 0) printf("  Drop highest %d: (", dice_nums[NUM_DROP_HIGHEST]);
         for(j = 0; j < dice_nums[NUM_DROP_HIGHEST]; j++) {
             temp_int = 0;
             for(k = 0; k < remaining_dice; k++)
@@ -107,29 +125,36 @@ void print_rolls(int *dice_nums) {
                     temp_int = temp_roll[k];
                     temp_index = k;
                 }
-            if(print_separate) printf("- %d ", temp_int);
             temp_total -= temp_int;
+            if(print_separate){
+                printf("-%d", temp_int);
+                if (j < dice_nums[NUM_DROP_HIGHEST] - 1) {
+                    printf(" ");
+                } else {
+                    printf(") = %d\n", temp_total);
+                }
+            }
             remaining_dice--;
             for(k = temp_index; k < remaining_dice; k++) {
                 temp_roll[k] = temp_roll[k + 1];
             }
         }
-        if(print_separate) printf(") ");
+        
         if(dice_nums[MULTIPLIER] != 1) {
-            if(print_separate) printf("* %d ", dice_nums[MULTIPLIER]);
+            if(print_separate) printf("  * %d", dice_nums[MULTIPLIER]);
             temp_total *= dice_nums[MULTIPLIER];
         }
         if(dice_nums[MODIFIER]) {
             if(print_separate) {
                 if (dice_nums[MODIFIER] > 0)
-                    printf("+ %d ", dice_nums[MODIFIER]);
+                    printf("  + %d", dice_nums[MODIFIER]);
                 else
-                    printf("- %d ", abs(dice_nums[MODIFIER]));
+                    printf("  - %d", abs(dice_nums[MODIFIER]));
             }
             temp_total += dice_nums[MODIFIER];
         }
-        if(print_separate) printf("= ");
-        printf("%d ", temp_total);
+        if(print_separate) printf("  = ");
+        printf("%d", temp_total);
         if(print_separate) printf("\n");
     }
     if(!print_separate) printf("\n");
