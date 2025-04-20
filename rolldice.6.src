@@ -1,7 +1,7 @@
-.\" Man file for rolldice(6) - v__VERSION__ - 16 Oct 2015
-.\" (c) Stevie Strickland, 1999-2012
+.\" Man file for rolldice(6) - v__VERSION__ - 20 Apr 2025
+.\" (c) Stevie Strickland, 1999-2025
 .\"
-.TH ROLLDICE 6 "16 Oct 2015" Linux
+.TH ROLLDICE 6 "20 Apr 2025" Linux
 .SH NAME
 rolldice \- rolls virtual dice
 .SH SYNOPSIS
@@ -41,7 +41,7 @@ to the prompt.
 .SH "DICE STRING FORMAT" 
 The dice string uses the following format:
 .RS
-.IP {#x}{#}d[#|%]{*#}{+/-#}{s#}
+.IP {#x}{#}d[#|%]{*#}{+/-#}{s#}{h#}
 .RE
 .P
 The dice string doesn't have to be in the exact format outlined above,
@@ -75,11 +75,15 @@ from each roll.  1d4+1 results in a range from 2-5 (1-4 for the die, plus
 .IP {s#}
 This number describes how many lowest dice rolls to drop.  This step is
 handled *before* the multiplication modifier.
+.IP {h#}
+This number describes how many highest dice rolls to drop. This step is
+handled *before* the multiplication modifier, and can be used in combination
+with dropping lowest dice.
 .RE
 .P Any combination of the optional parts of the string may be used, but only
-in the order show above.  For an extreme example, "3x4d6*5+1s2" would roll 
-four six-sided dice, drop the lowest two, multiply the result by 5, add 1 to 
-that, and repeat the process two more times, for a total of three results.
+in the order show above.  For an extreme example, "3x4d6*5+1s2h1" would roll 
+four six-sided dice, drop the lowest two and highest one, multiply the result by 5, 
+add 1 to that, and repeat the process two more times, for a total of three results.
 .SH DIAGNOSTICS
 The following error messages may appear on STDERR:
 
@@ -104,4 +108,4 @@ follow the BSD convention.
 .SH AUTHOR
 Stevie Strickland <sstrickl@ccs.neu.edu>
 .SH VERSION
-__VERSION__ - 18 Dec 2012
+__VERSION__ - 20 Apr 2025

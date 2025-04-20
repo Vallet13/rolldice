@@ -104,3 +104,9 @@ so that's fixed in this newest release.
 
 Stéphane changed the error handling from following stdlib conventions to
 BSD (sysexits.h) conventions.
+
+2025.4.20
+
+Val added the ability to drop highest dice rolls using the 'h#' modifier in dice strings.
+Improved the format of separate printout for better readability.
+Minor formatting and indentation fixes throughout the codebase.

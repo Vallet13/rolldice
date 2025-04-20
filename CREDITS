@@ -25,3 +25,6 @@ Stéphane Blondon <stephane.blondon@gmail.com>
  - For improving error messages, the handling of version numbers and
    reading dice strings on standard input.
 
+Val Seifert
+ - For implementing a "drop highest" functionality
+
